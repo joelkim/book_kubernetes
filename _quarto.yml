@@ -57,6 +57,15 @@ website:
     search: true
     contents:
       - "index.ipynb"
+      - section: "kubernetes tools"
+        contents:
+          - "kubetools.ipynb"
+      - section: "minikube"
+        contents:
+          - "minikube.ipynb"
+      - section: "kubectl"
+        contents:
+          - "kubectl.ipynb"
       - section: "helm"
         contents:
           - "helm.ipynb"
