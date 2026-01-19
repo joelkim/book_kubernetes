@@ -69,3 +69,5 @@ website:
       - section: "helm"
         contents:
           - "helm.ipynb"
+          - "helmrepo.ipynb"
+          - "helmdependency.ipynb"
