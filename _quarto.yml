@@ -71,3 +71,4 @@ website:
           - "helm.ipynb"
           - "helmrepo.ipynb"
           - "helmdependency.ipynb"
+          - "helmchartcreate.ipynb"
