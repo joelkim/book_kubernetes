@@ -1,0 +1,265 @@
+[
+  {
+    "objectID": "reference.html",
+    "href": "reference.html",
+    "title": "참고문헌",
+    "section": "",
+    "text": "“Pro Git Book.” 2025. https://git-scm.com/book/en/v2."
+  },
+  {
+    "objectID": "kubetools.html",
+    "href": "kubetools.html",
+    "title": "Kubernetes Tools",
+    "section": "",
+    "text": "podman",
+    "crumbs": [
+      "kubernetes tools",
+      "Kubernetes Tools"
+    ]
+  },
+  {
+    "objectID": "kubetools.html#vm",
+    "href": "kubetools.html#vm",
+    "title": "Kubernetes Tools",
+    "section": "",
+    "text": "podman",
+    "crumbs": [
+      "kubernetes tools",
+      "Kubernetes Tools"
+    ]
+  },
+  {
+    "objectID": "kubetools.html#cluster",
+    "href": "kubetools.html#cluster",
+    "title": "Kubernetes Tools",
+    "section": "Cluster",
+    "text": "Cluster\n\nminikube",
+    "crumbs": [
+      "kubernetes tools",
+      "Kubernetes Tools"
+    ]
+  },
+  {
+    "objectID": "kubetools.html#controller",
+    "href": "kubetools.html#controller",
+    "title": "Kubernetes Tools",
+    "section": "Controller",
+    "text": "Controller\n\nkubectl",
+    "crumbs": [
+      "kubernetes tools",
+      "Kubernetes Tools"
+    ]
+  },
+  {
+    "objectID": "kubetools.html#deploy",
+    "href": "kubetools.html#deploy",
+    "title": "Kubernetes Tools",
+    "section": "Deploy",
+    "text": "Deploy\n\nhelm",
+    "crumbs": [
+      "kubernetes tools",
+      "Kubernetes Tools"
+    ]
+  },
+  {
+    "objectID": "helm/helmdependency.html",
+    "href": "helm/helmdependency.html",
+    "title": "Helm 종속성",
+    "section": "",
+    "text": "helm dependency 명령으로 검사\n검사 대상은 로컬 컴퓨터에 있는 파일만 가능. 원격 차트는 불가",
+    "crumbs": [
+      "helm",
+      "Helm 종속성"
+    ]
+  },
+  {
+    "objectID": "helm/helmdependency.html#차트-종속성-검사-명령",
+    "href": "helm/helmdependency.html#차트-종속성-검사-명령",
+    "title": "Helm 종속성",
+    "section": "",
+    "text": "helm dependency 명령으로 검사\n검사 대상은 로컬 컴퓨터에 있는 파일만 가능. 원격 차트는 불가",
+    "crumbs": [
+      "helm",
+      "Helm 종속성"
+    ]
+  },
+  {
+    "objectID": "helm/helmdependency.html#차트-종속성-다운로드-명령",
+    "href": "helm/helmdependency.html#차트-종속성-다운로드-명령",
+    "title": "Helm 종속성",
+    "section": "차트 종속성 다운로드 명령",
+    "text": "차트 종속성 다운로드 명령\n\nhelm dependency update 명령으로 종속성 차트 다운로드",
+    "crumbs": [
+      "helm",
+      "Helm 종속성"
+    ]
+  },
+  {
+    "objectID": "helm/helm_basic.html",
+    "href": "helm/helm_basic.html",
+    "title": "헬름 사용법",
+    "section": "",
+    "text": "helm create 차트명\n차트명 디렉토리가 생성되며 그 아래에 기본 템플릿이 만들어짐\n\n$ helm create helm1\nCreating helm1\n$ tree helm1       \nhelm1\n├── Chart.yaml\n├── charts\n├── templates\n│   ├── _helpers.tpl\n│   ├── deployment.yaml\n│   ├── hpa.yaml\n│   ├── httproute.yaml\n│   ├── ingress.yaml\n│   ├── NOTES.txt\n│   ├── service.yaml\n│   ├── serviceaccount.yaml\n│   └── tests\n│       └── test-connection.yaml\n└── values.yaml\n\n4 directories, 11 files",
+    "crumbs": [
+      "helm",
+      "헬름 사용법"
+    ]
+  },
+  {
+    "objectID": "helm/helm_basic.html#차트-생성-명령",
+    "href": "helm/helm_basic.html#차트-생성-명령",
+    "title": "헬름 사용법",
+    "section": "",
+    "text": "helm create 차트명\n차트명 디렉토리가 생성되며 그 아래에 기본 템플릿이 만들어짐\n\n$ helm create helm1\nCreating helm1\n$ tree helm1       \nhelm1\n├── Chart.yaml\n├── charts\n├── templates\n│   ├── _helpers.tpl\n│   ├── deployment.yaml\n│   ├── hpa.yaml\n│   ├── httproute.yaml\n│   ├── ingress.yaml\n│   ├── NOTES.txt\n│   ├── service.yaml\n│   ├── serviceaccount.yaml\n│   └── tests\n│       └── test-connection.yaml\n└── values.yaml\n\n4 directories, 11 files",
+    "crumbs": [
+      "helm",
+      "헬름 사용법"
+    ]
+  },
+  {
+    "objectID": "helm/helm_basic.html#챠트-구조",
+    "href": "helm/helm_basic.html#챠트-구조",
+    "title": "헬름 사용법",
+    "section": "챠트 구조",
+    "text": "챠트 구조\n\nChart.yaml: 차트 파일\nvalues.yaml: 디폴트 값 저장 파일\ncharts: 종속성 차트 파일이 저장되는 디렉토리\ntemplates: 차트에 속하는 리소스에 대한 쿠버네티스 매니페스트가 저장되는 디렉토리\n\n\nChart.yaml 파일\n\n챠트 정의 파일\n\n필수 항목\n\napiVersion: 차트 API 버전\nname: 차트 이름\nversion: 차트 버전\n\n옵션 항목\n\nappVersion: 애플리케이션 버전\ntype: application 또는 library\n\n\n\napiVersion: v2\nname: anvil\nversion: 0.1.0\ndescription: A Helm chart for Kubernetes\nappVersion: \"1.16.0\"\n\n\n템플릿\n\ntemplates 디렉토리 아래의 .yaml 파일과 .tpl 파일\n리소스 매니페스트 파일을 만들기 위한 템플릿\n이 템플릿에 values.yaml 파일의 값을 렌더링하여 리소스 매니페스트 파일을 생성\n\n\n.tpl 파일\n\n.tpl 파일에서는 .yaml 파일내에서 사용할 블럭(named template)을 정의\n블럭(named template)\n\n{ define \"블럭명\" } 문장으로 시작\n{ end } 문장으로 종료\n\n.tpl 파일의 이름은 관례상 _(밑줄)기호로 시작\n_helper.tpl 파일\n\n자동 생성\n다음과 같은 6개 블럭 정의\n\n차트명.fullname\n\n모든 리소스의 이름으로 사용됨\n\n차트명.selectorLabels\n\ndelplyment, service 등 포드 선택이 필요한 리소스에 사용\napp.kubernetes.io/name: 차트명.name 값 사용\napp.kubernetes.io/instance: helm install 명령시 인수로 주어지는 릴리스 이름 사용\n\n차트명.labels\n\n모든 리소스에 공통 라벨로 사용\nhelm.sh/chart: 차트명.chart 값 사용\napp.kubernetes.io/version: Chart.yaml 파일에서 appVersion 값을 지정한 경우 이 값\napp.kubernetes.io/managed-by: Helm 이라는 문자열로 고정\n\n차트명.name\n\napp.kubernetes.io/name 라벨 값으로 사용\n\n차트명.chart\n\nhelm.sh/chart 라벨 값으로 사용\n\n차트명.serviceAccountName\n\n\n\n{{/*\nExpand the name of the chart.\n*/}}\n{{- define \"helm1.name\" -}}\n{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix \"-\" }}\n{{- end }}\n\n{{/*\nCreate a default fully qualified app name.\nWe truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).\nIf release name contains chart name it will be used as a full name.\n*/}}\n{{- define \"helm1.fullname\" -}}\n{{- if .Values.fullnameOverride }}\n{{- .Values.fullnameOverride | trunc 63 | trimSuffix \"-\" }}\n{{- else }}\n{{- $name := default .Chart.Name .Values.nameOverride }}\n{{- if contains $name .Release.Name }}\n{{- .Release.Name | trunc 63 | trimSuffix \"-\" }}\n{{- else }}\n{{- printf \"%s-%s\" .Release.Name $name | trunc 63 | trimSuffix \"-\" }}\n{{- end }}\n{{- end }}\n{{- end }}\n\n{{/*\nCreate chart name and version as used by the chart label.\n*/}}\n{{- define \"helm1.chart\" -}}\n{{- printf \"%s-%s\" .Chart.Name .Chart.Version | replace \"+\" \"_\" | trunc 63 | trimSuffix \"-\" }}\n{{- end }}\n\n{{/*\nCommon labels\n*/}}\n{{- define \"helm1.labels\" -}}\nhelm.sh/chart: {{ include \"helm1.chart\" . }}\n{{ include \"helm1.selectorLabels\" . }}\n{{- if .Chart.AppVersion }}\napp.kubernetes.io/version: {{ .Chart.AppVersion | quote }}\n{{- end }}\napp.kubernetes.io/managed-by: {{ .Release.Service }}\n{{- end }}\n\n{{/*\nSelector labels\n*/}}\n{{- define \"helm1.selectorLabels\" -}}\napp.kubernetes.io/name: {{ include \"helm1.name\" . }}\napp.kubernetes.io/instance: {{ .Release.Name }}\n{{- end }}\n\n{{/*\nCreate the name of the service account to use\n*/}}\n{{- define \"helm1.serviceAccountName\" -}}\n{{- if .Values.serviceAccount.create }}\n{{- default (include \"helm1.fullname\" .) .Values.serviceAccount.name }}\n{{- else }}\n{{- default \"default\" .Values.serviceAccount.name }}\n{{- end }}\n{{- end }}\n\n\n.yaml 파일\n\n쿠버네티스 리소스를 정의하는 템플릿 파일\n미리 정의된 값이 { } 안에 렌더링 됨\n두 가지 렌더링 방식\n\n{ 키_경로 }: 키의 값을 렌더링\n\n{ .Chart.키_경로 }: Chart.yaml 파일의 값을 렌더링\n{ .Values.키_경로 }: values.yaml 파일의 값을 렌더링\n{ .Release.키_경로 }: helm install 명령 실행시 인수 값들을 렌더링\n\n{ .Release.Service }: helm을 사용하는 경우 Helm이라는 값\n{ .Release.Name }: 릴리스 이름\n{ .Release.Namespace }: 네임스페이스 이름\n\n\n{ include 블럭_이름 컨텍스트 }: .tpl 파일에서 정의된 블럭(named template)을 렌더링\n\n컨텍스트: 템플릿의 블럭 템플릿이 받을 값의 범위\n\n.: 현재 사용하고 있는 컨텍스트를 블럭 템플릿에 넘김\n$: 루트 컨텍스트를 블럭 템플릿에 넘김\n\n\n\n\n\n\n공백 처리\n\n.tpl 파일에서 블럭을 정의하거나 .yaml 파일에서 렌더링할 때 공백을 처리하는 방법\n\n{ ... } : 앞뒤 공백/개행을 그대로\n{- ... } : 앞쪽 공백/개행을 제거\n{ ... -} : 뒤쪽 공백/개행을 제거\n{- ... -} : 앞뒤 모두 공백/개행을 제거\n\n.tpl 파일에서\n\ndefine 문은 반드시 앞뒤 공백을 제거하고 end 문은 반드시 앞 공백을 제거해야 함\n{{- define \"XXX\" --}}\n\n{{- end }}\n\n.yaml 템플릿 파일에서\n\ninclude 사용시\n\n한 줄에 속성 이름과 값을 쓰고 값에만 렌더링이 되는 경우에는 `{{ include … }}`` 사용\n하위 노드를 포함한 노드 전체가 렌더링되는 경우에는 `{{- include … | nindent N }}`` 사용",
+    "crumbs": [
+      "helm",
+      "헬름 사용법"
+    ]
+  },
+  {
+    "objectID": "helm/helm_basic.html#차트-렌더링-명령",
+    "href": "helm/helm_basic.html#차트-렌더링-명령",
+    "title": "헬름 사용법",
+    "section": "차트 렌더링 명령",
+    "text": "차트 렌더링 명령\n\nhelm template 차트명 차트디렉토리 명령으로 생성되는 리소스 매니페스트를 미리 볼 수 있음\n\nhelm template helm1 .\n---\n# Source: helm1/templates/serviceaccount.yaml\napiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: helm1\n  labels:\n    helm.sh/chart: helm1-0.1.0\n    app.kubernetes.io/name: helm1\n    app.kubernetes.io/instance: helm1\n    app.kubernetes.io/version: \"1.16.0\"\n    app.kubernetes.io/managed-by: Helm\nautomountServiceAccountToken: true\n---\n# Source: helm1/templates/service.yaml\napiVersion: v1\nkind: Service\nmetadata:\n  name: helm1\n  labels:\n    helm.sh/chart: helm1-0.1.0\n    app.kubernetes.io/name: helm1\n    app.kubernetes.io/instance: helm1\n    app.kubernetes.io/version: \"1.16.0\"\n    app.kubernetes.io/managed-by: Helm\nspec:\n  type: ClusterIP\n  ports:\n    - port: 80\n      targetPort: http\n      protocol: TCP\n      name: http\n  selector:\n    app.kubernetes.io/name: helm1\n    app.kubernetes.io/instance: helm1\n---\n# Source: helm1/templates/deployment.yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: helm1\n  labels:\n    helm.sh/chart: helm1-0.1.0\n    app.kubernetes.io/name: helm1\n    app.kubernetes.io/instance: helm1\n    app.kubernetes.io/version: \"1.16.0\"\n    app.kubernetes.io/managed-by: Helm\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app.kubernetes.io/name: helm1\n      app.kubernetes.io/instance: helm1\n  template:\n    metadata:\n      labels:\n        helm.sh/chart: helm1-0.1.0\n        app.kubernetes.io/name: helm1\n        app.kubernetes.io/instance: helm1\n        app.kubernetes.io/version: \"1.16.0\"\n        app.kubernetes.io/managed-by: Helm\n    spec:\n      serviceAccountName: helm1\n      containers:\n        - name: helm1\n          image: \"nginx:1.16.0\"\n          imagePullPolicy: IfNotPresent\n          ports:\n            - name: http\n              containerPort: 80\n              protocol: TCP\n          livenessProbe:\n            httpGet:\n              path: /\n              port: http\n          readinessProbe:\n            httpGet:\n              path: /\n              port: http\n---\n# Source: helm1/templates/tests/test-connection.yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: \"helm1-test-connection\"\n  labels:\n    helm.sh/chart: helm1-0.1.0\n    app.kubernetes.io/name: helm1\n    app.kubernetes.io/instance: helm1\n    app.kubernetes.io/version: \"1.16.0\"\n    app.kubernetes.io/managed-by: Helm\n  annotations:\n    \"helm.sh/hook\": test\nspec:\n  containers:\n    - name: wget\n      image: busybox\n      command: ['wget']\n      args: ['helm1:80']\n  restartPolicy: Never",
+    "crumbs": [
+      "helm",
+      "헬름 사용법"
+    ]
+  },
+  {
+    "objectID": "helm/helm_basic.html#앱-설치-명령",
+    "href": "helm/helm_basic.html#앱-설치-명령",
+    "title": "헬름 사용법",
+    "section": "앱 설치 명령",
+    "text": "앱 설치 명령\n\nhelm 차트로 만들어진 앱을 쿠버네티스에 설치하려면 helm install 명령을 사용한다.\nhelm install 릴리스_이름 챠트_디렉토리\n릴리스 이름은 차트 이름과 달라도 된다.\n차트 이름은 app.kubernetes.io/name 라벨에\n릴리스 이름은 app.kubernetes.io/instance 라벨에\n\n$ ls \nhelm1\n\n$ helm install helm1a helm1\nNAME: helm1a\nLAST DEPLOYED: Mon Jun  1 14:58:14 2026\nNAMESPACE: default\nSTATUS: deployed\nREVISION: 1\nDESCRIPTION: Install complete\nNOTES:\n1. Get the application URL by running these commands:\n  export POD_NAME=$(kubectl get pods --namespace default -l \"app.kubernetes.io/name=helm1,app.kubernetes.io/instance=helm1a\" -o jsonpath=\"{.items[0].metadata.name}\")\n  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath=\"{.spec.containers[0].ports[0].containerPort}\")\n  echo \"Visit http://127.0.0.1:8080 to use your application\"\n  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT\n\n$ kubectl get sa,svc,deploy,pod  -l app.kubernetes.io/name=helm1\nNAME                    SECRETS   AGE\nserviceaccount/helm1a   0         14m\n\nNAME             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE\nservice/helm1a   ClusterIP   10.43.85.177   &lt;none&gt;        80/TCP    14m\n\nNAME                     READY   UP-TO-DATE   AVAILABLE   AGE\ndeployment.apps/helm1a   1/1     1            1           14m\n\nNAME                          READY   STATUS    RESTARTS   AGE\npod/helm1a-6777c58455-mgcc8   1/1     Running   0          14m\n\n$ ubectl get sa,svc,deploy,pod  -l app.kubernetes.io/instance=helm1a\nNAME                    SECRETS   AGE\nserviceaccount/helm1a   0         144m\n\nNAME             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE\nservice/helm1a   ClusterIP   10.43.85.177   &lt;none&gt;        80/TCP    144m\n\nNAME                     READY   UP-TO-DATE   AVAILABLE   AGE\ndeployment.apps/helm1a   1/1     1            1           144m\n\nNAME                          READY   STATUS    RESTARTS   AGE\npod/helm1a-6777c58455-mgcc8   1/1     Running   0          144m",
+    "crumbs": [
+      "helm",
+      "헬름 사용법"
+    ]
+  },
+  {
+    "objectID": "helm/helm_basic.html#앱-삭제-명령",
+    "href": "helm/helm_basic.html#앱-삭제-명령",
+    "title": "헬름 사용법",
+    "section": "앱 삭제 명령",
+    "text": "앱 삭제 명령\n\nhelm 차트로 만들어지고 쿠버네티스에 설치된 앱을 쿠버네티스에서 삭제하려면 helm uninstall 명령을 사용한다.\nhelm install 앱_릴리스_이름",
+    "crumbs": [
+      "helm",
+      "헬름 사용법"
+    ]
+  },
+  {
+    "objectID": "helm/helmchartinstall.html",
+    "href": "helm/helmchartinstall.html",
+    "title": "Helm 차트 설치",
+    "section": "",
+    "text": "helm install 이름 차트명 --values 밸류파일명\nhelm uninstall 이름"
+  },
+  {
+    "objectID": "helm/helmchartinstall.html#차트-설치-및-삭제-명령",
+    "href": "helm/helmchartinstall.html#차트-설치-및-삭제-명령",
+    "title": "Helm 차트 설치",
+    "section": "",
+    "text": "helm install 이름 차트명 --values 밸류파일명\nhelm uninstall 이름"
+  },
+  {
+    "objectID": "helm/helmrepo.html",
+    "href": "helm/helmrepo.html",
+    "title": "Helm 레포",
+    "section": "",
+    "text": "로컬에 레포를 등록/삭제/업데이트하거나 목록을 조회할 때는 helm repo 명령 사용\nhelm repo list\nhelm repo add\nhelm repo remove\nhelm repo update",
+    "crumbs": [
+      "helm",
+      "Helm 레포"
+    ]
+  },
+  {
+    "objectID": "helm/helmrepo.html#레포-관련-명령",
+    "href": "helm/helmrepo.html#레포-관련-명령",
+    "title": "Helm 레포",
+    "section": "",
+    "text": "로컬에 레포를 등록/삭제/업데이트하거나 목록을 조회할 때는 helm repo 명령 사용\nhelm repo list\nhelm repo add\nhelm repo remove\nhelm repo update",
+    "crumbs": [
+      "helm",
+      "Helm 레포"
+    ]
+  },
+  {
+    "objectID": "helm/helmrepo.html#차트-검색-명령",
+    "href": "helm/helmrepo.html#차트-검색-명령",
+    "title": "Helm 레포",
+    "section": "차트 검색 명령",
+    "text": "차트 검색 명령\n\n로컬에 등록한 레포내에서 차트를 검색할 때는 helm search repo 명령 사용\nhelm search repo: 모든 레포의 전체 차트 목록 출력\nhelm search repo 키워드: 레포 이름이나 차트 이름에서 특정 키워드 검색하여 출력\nhelm search repo 키워드 --versions: 검색된 챠트의 모든 버전 목록 출력\n\n\n\n로컬에 등록한 레포가 아니라 artifact hub에 있는 전체 정보를 검색하려면 helm search hub 명령 사용",
+    "crumbs": [
+      "helm",
+      "Helm 레포"
+    ]
+  },
+  {
+    "objectID": "helm/helmrepo.html#차트-조회-및-다운로드-명령",
+    "href": "helm/helmrepo.html#차트-조회-및-다운로드-명령",
+    "title": "Helm 레포",
+    "section": "차트 조회 및 다운로드 명령",
+    "text": "차트 조회 및 다운로드 명령\n\nhelm show chart 차트명 --version 버전: 차트 내용 조회\nhelm pull 차트명 --version 버전: 차트를 압축 파일로 다운로드\n\n--untar --untardir 디렉토리 옵션으로 압축을 풀어서 다운로드 가능",
+    "crumbs": [
+      "helm",
+      "Helm 레포"
+    ]
+  },
+  {
+    "objectID": "minikube.html",
+    "href": "minikube.html",
+    "title": "minikube",
+    "section": "",
+    "text": "minikube version\n\n\n\n\n\nminikube profile\n\n\n\n\n\nminikube start\nminikube stop\nminikube pause\nminikube unpause\nminikube delete\n\n\n\n\n\nminikube config\nminikube ip\nminikube status\nminikube dashboard",
+    "crumbs": [
+      "minikube",
+      "minikube"
+    ]
+  },
+  {
+    "objectID": "minikube.html#기본-서브커맨드",
+    "href": "minikube.html#기본-서브커맨드",
+    "title": "minikube",
+    "section": "",
+    "text": "minikube version\n\n\n\n\n\nminikube profile\n\n\n\n\n\nminikube start\nminikube stop\nminikube pause\nminikube unpause\nminikube delete\n\n\n\n\n\nminikube config\nminikube ip\nminikube status\nminikube dashboard",
+    "crumbs": [
+      "minikube",
+      "minikube"
+    ]
+  },
+  {
+    "objectID": "minikube.html#profile",
+    "href": "minikube.html#profile",
+    "title": "minikube",
+    "section": "profile",
+    "text": "profile",
+    "crumbs": [
+      "minikube",
+      "minikube"
+    ]
+  },
+  {
+    "objectID": "minikube.html#config",
+    "href": "minikube.html#config",
+    "title": "minikube",
+    "section": "config",
+    "text": "config\n\nminikube config view\nminikube config get 항목\nminikube config set 항목",
+    "crumbs": [
+      "minikube",
+      "minikube"
+    ]
+  }
+]

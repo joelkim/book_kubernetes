@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>헬름 사용법 – Kubenetes Book</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-e2135d541aa32bab07c4d0656a7e0000.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../helm/helm.html">helm</a></li><li class="breadcrumb-item"><a href="../helm/helm_basic.html">헬름 사용법</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Kubenetes Book</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kubenetes Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">kubernetes tools</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../kubetools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kubernetes Tools</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">minikube</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../minikube.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">minikube</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">kubectl</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../kubectl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">kubectl</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">helm</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../helm/helm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">헬름</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../helm/helm_basic.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">헬름 사용법</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../helm/helmrepo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Helm 레포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../helm/helmdependency.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Helm 종속성</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#차트-생성-명령" id="toc-차트-생성-명령" class="nav-link active" data-scroll-target="#차트-생성-명령">차트 생성 명령</a></li>
+  <li><a href="#챠트-구조" id="toc-챠트-구조" class="nav-link" data-scroll-target="#챠트-구조">챠트 구조</a>
+  <ul>
+  <li><a href="#chart.yaml-파일" id="toc-chart.yaml-파일" class="nav-link" data-scroll-target="#chart.yaml-파일"><code>Chart.yaml</code> 파일</a></li>
+  <li><a href="#템플릿" id="toc-템플릿" class="nav-link" data-scroll-target="#템플릿">템플릿</a>
+  <ul>
+  <li><a href="#tpl-파일" id="toc-tpl-파일" class="nav-link" data-scroll-target="#tpl-파일"><code>.tpl</code> 파일</a></li>
+  <li><a href="#yaml-파일" id="toc-yaml-파일" class="nav-link" data-scroll-target="#yaml-파일"><code>.yaml</code> 파일</a></li>
+  <li><a href="#공백-처리" id="toc-공백-처리" class="nav-link" data-scroll-target="#공백-처리">공백 처리</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#차트-렌더링-명령" id="toc-차트-렌더링-명령" class="nav-link" data-scroll-target="#차트-렌더링-명령">차트 렌더링 명령</a></li>
+  <li><a href="#앱-설치-명령" id="toc-앱-설치-명령" class="nav-link" data-scroll-target="#앱-설치-명령">앱 설치 명령</a></li>
+  <li><a href="#앱-삭제-명령" id="toc-앱-삭제-명령" class="nav-link" data-scroll-target="#앱-삭제-명령">앱 삭제 명령</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../helm/helm.html">helm</a></li><li class="breadcrumb-item"><a href="../helm/helm_basic.html">헬름 사용법</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">헬름 사용법</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="차트-생성-명령" class="level2">
+<h2 class="anchored" data-anchor-id="차트-생성-명령">차트 생성 명령</h2>
+<ul>
+<li><code>helm create 차트명</code></li>
+<li><code>차트명</code> 디렉토리가 생성되며 그 아래에 기본 템플릿이 만들어짐</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> helm create helm1</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Creating</span> helm1</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tree helm1       </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">helm1</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> Chart.yaml</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> charts</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> templates</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── _helpers.tpl</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── deployment.yaml</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── hpa.yaml</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── httproute.yaml</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── ingress.yaml</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── NOTES.txt</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── service.yaml</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── serviceaccount.yaml</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── tests</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>       └── test-connection.yaml</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> values.yaml</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ex">4</span> directories, 11 files</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="챠트-구조" class="level2">
+<h2 class="anchored" data-anchor-id="챠트-구조">챠트 구조</h2>
+<ul>
+<li><code>Chart.yaml</code>: 차트 파일</li>
+<li><code>values.yaml</code>: 디폴트 값 저장 파일</li>
+<li><code>charts</code>: 종속성 차트 파일이 저장되는 디렉토리</li>
+<li><code>templates</code>: 차트에 속하는 리소스에 대한 쿠버네티스 매니페스트가 저장되는 디렉토리</li>
+</ul>
+<section id="chart.yaml-파일" class="level3">
+<h3 class="anchored" data-anchor-id="chart.yaml-파일"><code>Chart.yaml</code> 파일</h3>
+<ul>
+<li>챠트 정의 파일
+<ul>
+<li>필수 항목
+<ul>
+<li><code>apiVersion</code>: 차트 API 버전</li>
+<li><code>name</code>: 차트 이름</li>
+<li><code>version</code>: 차트 버전</li>
+</ul></li>
+<li>옵션 항목
+<ul>
+<li><code>appVersion</code>: 애플리케이션 버전</li>
+<li><code>type</code>: <code>application</code> 또는 <code>library</code></li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v2</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> anvil</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1.0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">description</span><span class="kw">:</span><span class="at"> A Helm chart for Kubernetes</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">appVersion</span><span class="kw">:</span><span class="at"> </span><span class="st">"1.16.0"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="템플릿" class="level3">
+<h3 class="anchored" data-anchor-id="템플릿">템플릿</h3>
+<ul>
+<li><code>templates</code> 디렉토리 아래의 <code>.yaml</code> 파일과 <code>.tpl</code> 파일</li>
+<li>리소스 매니페스트 파일을 만들기 위한 템플릿</li>
+<li>이 템플릿에 values.yaml 파일의 값을 렌더링하여 리소스 매니페스트 파일을 생성</li>
+</ul>
+<section id="tpl-파일" class="level4">
+<h4 class="anchored" data-anchor-id="tpl-파일"><code>.tpl</code> 파일</h4>
+<ul>
+<li><code>.tpl</code> 파일에서는 <code>.yaml</code> 파일내에서 사용할 블럭(named template)을 정의</li>
+<li>블럭(named template)
+<ul>
+<li><code>{ define "블럭명" }</code> 문장으로 시작</li>
+<li><code>{ end }</code> 문장으로 종료</li>
+</ul></li>
+<li><code>.tpl</code> 파일의 이름은 관례상 <code>_</code>(밑줄)기호로 시작</li>
+<li><code>_helper.tpl</code> 파일
+<ul>
+<li>자동 생성</li>
+<li>다음과 같은 6개 블럭 정의
+<ul>
+<li><code>차트명.fullname</code>
+<ul>
+<li>모든 리소스의 이름으로 사용됨</li>
+</ul></li>
+<li><code>차트명.selectorLabels</code>
+<ul>
+<li>delplyment, service 등 포드 선택이 필요한 리소스에 사용</li>
+<li><code>app.kubernetes.io/name</code>: <code>차트명.name</code> 값 사용</li>
+<li><code>app.kubernetes.io/instance</code>: <code>helm install</code> 명령시 인수로 주어지는 릴리스 이름 사용</li>
+</ul></li>
+<li><code>차트명.labels</code>
+<ul>
+<li>모든 리소스에 공통 라벨로 사용</li>
+<li><code>helm.sh/chart</code>: <code>차트명.chart</code> 값 사용</li>
+<li><code>app.kubernetes.io/version</code>: <code>Chart.yaml</code> 파일에서 <code>appVersion</code> 값을 지정한 경우 이 값</li>
+<li><code>app.kubernetes.io/managed-by</code>: <code>Helm</code> 이라는 문자열로 고정</li>
+</ul></li>
+<li><code>차트명.name</code>
+<ul>
+<li><code>app.kubernetes.io/name</code> 라벨 값으로 사용</li>
+</ul></li>
+<li><code>차트명.chart</code>
+<ul>
+<li><code>helm.sh/chart</code> 라벨 값으로 사용</li>
+</ul></li>
+<li><code>차트명.serviceAccountName</code></li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">{{</span><span class="co">/*</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">Expand the name of the chart.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span><span class="op">}}</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> define <span class="st">"helm1.name"</span> <span class="op">-}}</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="cf">default</span> <span class="op">.</span>Chart<span class="op">.</span>Name <span class="op">.</span>Values<span class="op">.</span>nameOverride <span class="op">|</span> trunc <span class="dv">63</span> <span class="op">|</span> trimSuffix <span class="st">"-"</span> <span class="op">}}</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> end <span class="op">}}</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="op">{{</span><span class="co">/*</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">Create a default fully qualified app name.</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">If release name contains chart name it will be used as a full name.</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span><span class="op">}}</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> define <span class="st">"helm1.fullname"</span> <span class="op">-}}</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="cf">if</span> <span class="op">.</span>Values<span class="op">.</span>fullnameOverride <span class="op">}}</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="op">.</span>Values<span class="op">.</span>fullnameOverride <span class="op">|</span> trunc <span class="dv">63</span> <span class="op">|</span> trimSuffix <span class="st">"-"</span> <span class="op">}}</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="cf">else</span> <span class="op">}}</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> $name <span class="op">:=</span> <span class="cf">default</span> <span class="op">.</span>Chart<span class="op">.</span>Name <span class="op">.</span>Values<span class="op">.</span>nameOverride <span class="op">}}</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="cf">if</span> contains $name <span class="op">.</span>Release<span class="op">.</span>Name <span class="op">}}</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="op">.</span>Release<span class="op">.</span>Name <span class="op">|</span> trunc <span class="dv">63</span> <span class="op">|</span> trimSuffix <span class="st">"-"</span> <span class="op">}}</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="cf">else</span> <span class="op">}}</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> printf <span class="st">"%s-%s"</span> <span class="op">.</span>Release<span class="op">.</span>Name $name <span class="op">|</span> trunc <span class="dv">63</span> <span class="op">|</span> trimSuffix <span class="st">"-"</span> <span class="op">}}</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> end <span class="op">}}</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> end <span class="op">}}</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> end <span class="op">}}</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="op">{{</span><span class="co">/*</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">Create chart name and version as used by the chart label.</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span><span class="op">}}</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> define <span class="st">"helm1.chart"</span> <span class="op">-}}</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> printf <span class="st">"%s-%s"</span> <span class="op">.</span>Chart<span class="op">.</span>Name <span class="op">.</span>Chart<span class="op">.</span>Version <span class="op">|</span> replace <span class="st">"+"</span> <span class="st">"_"</span> <span class="op">|</span> trunc <span class="dv">63</span> <span class="op">|</span> trimSuffix <span class="st">"-"</span> <span class="op">}}</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> end <span class="op">}}</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="op">{{</span><span class="co">/*</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">Common labels</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span><span class="op">}}</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> define <span class="st">"helm1.labels"</span> <span class="op">-}}</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>helm<span class="op">.</span>sh<span class="op">/</span>chart<span class="op">:</span> <span class="op">{{</span> include <span class="st">"helm1.chart"</span> <span class="op">.</span> <span class="op">}}</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="op">{{</span> include <span class="st">"helm1.selectorLabels"</span> <span class="op">.</span> <span class="op">}}</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="cf">if</span> <span class="op">.</span>Chart<span class="op">.</span>AppVersion <span class="op">}}</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span>kubernetes<span class="op">.</span>io<span class="op">/</span>version<span class="op">:</span> <span class="op">{{</span> <span class="op">.</span>Chart<span class="op">.</span>AppVersion <span class="op">|</span> quote <span class="op">}}</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> end <span class="op">}}</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span>kubernetes<span class="op">.</span>io<span class="op">/</span>managed<span class="op">-</span>by<span class="op">:</span> <span class="op">{{</span> <span class="op">.</span>Release<span class="op">.</span>Service <span class="op">}}</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> end <span class="op">}}</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="op">{{</span><span class="co">/*</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co">Selector labels</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span><span class="op">}}</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> define <span class="st">"helm1.selectorLabels"</span> <span class="op">-}}</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span>kubernetes<span class="op">.</span>io<span class="op">/</span>name<span class="op">:</span> <span class="op">{{</span> include <span class="st">"helm1.name"</span> <span class="op">.</span> <span class="op">}}</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span>kubernetes<span class="op">.</span>io<span class="op">/</span>instance<span class="op">:</span> <span class="op">{{</span> <span class="op">.</span>Release<span class="op">.</span>Name <span class="op">}}</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> end <span class="op">}}</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="op">{{</span><span class="co">/*</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="co">Create the name of the service account to use</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span><span class="op">}}</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> define <span class="st">"helm1.serviceAccountName"</span> <span class="op">-}}</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="cf">if</span> <span class="op">.</span>Values<span class="op">.</span>serviceAccount<span class="op">.</span>create <span class="op">}}</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="cf">default</span> <span class="op">(</span>include <span class="st">"helm1.fullname"</span> <span class="op">.)</span> <span class="op">.</span>Values<span class="op">.</span>serviceAccount<span class="op">.</span>name <span class="op">}}</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="cf">else</span> <span class="op">}}</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> <span class="cf">default</span> <span class="st">"default"</span> <span class="op">.</span>Values<span class="op">.</span>serviceAccount<span class="op">.</span>name <span class="op">}}</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> end <span class="op">}}</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> end <span class="op">}}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="yaml-파일" class="level4">
+<h4 class="anchored" data-anchor-id="yaml-파일"><code>.yaml</code> 파일</h4>
+<ul>
+<li>쿠버네티스 리소스를 정의하는 템플릿 파일</li>
+<li>미리 정의된 값이 <code>{ }</code> 안에 렌더링 됨</li>
+<li>두 가지 렌더링 방식
+<ul>
+<li><code>{ 키_경로 }</code>: 키의 값을 렌더링
+<ul>
+<li><code>{ .Chart.키_경로 }</code>: <code>Chart.yaml</code> 파일의 값을 렌더링</li>
+<li><code>{ .Values.키_경로 }</code>: <code>values.yaml</code> 파일의 값을 렌더링</li>
+<li><code>{ .Release.키_경로 }</code>: <code>helm install</code> 명령 실행시 인수 값들을 렌더링
+<ul>
+<li><code>{ .Release.Service }</code>: helm을 사용하는 경우 <code>Helm</code>이라는 값</li>
+<li><code>{ .Release.Name }</code>: 릴리스 이름</li>
+<li><code>{ .Release.Namespace }</code>: 네임스페이스 이름</li>
+</ul></li>
+</ul></li>
+<li><code>{ include 블럭_이름 컨텍스트 }</code>: <code>.tpl</code> 파일에서 정의된 블럭(named template)을 렌더링
+<ul>
+<li>컨텍스트: 템플릿의 블럭 템플릿이 받을 값의 범위
+<ul>
+<li><code>.</code>: 현재 사용하고 있는 컨텍스트를 블럭 템플릿에 넘김</li>
+<li><code>$</code>: 루트 컨텍스트를 블럭 템플릿에 넘김</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="공백-처리" class="level4">
+<h4 class="anchored" data-anchor-id="공백-처리">공백 처리</h4>
+<ul>
+<li><code>.tpl</code> 파일에서 블럭을 정의하거나 <code>.yaml</code> 파일에서 렌더링할 때 공백을 처리하는 방법
+<ul>
+<li><code>{ ... }</code> : 앞뒤 공백/개행을 그대로</li>
+<li><code>{- ... }</code> : 앞쪽 공백/개행을 제거</li>
+<li><code>{ ... -}</code> : 뒤쪽 공백/개행을 제거</li>
+<li><code>{- ... -}</code> : 앞뒤 모두 공백/개행을 제거</li>
+</ul></li>
+<li><code>.tpl</code> 파일에서
+<ul>
+<li><p>define 문은 반드시 앞뒤 공백을 제거하고 end 문은 반드시 앞 공백을 제거해야 함</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> define <span class="st">"XXX"</span> <span class="op">--}}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">{{-</span> end <span class="op">}}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ul></li>
+<li><code>.yaml</code> 템플릿 파일에서
+<ul>
+<li>include 사용시
+<ul>
+<li>한 줄에 속성 이름과 값을 쓰고 값에만 렌더링이 되는 경우에는 `{{ include … }}`` 사용</li>
+<li>하위 노드를 포함한 노드 전체가 렌더링되는 경우에는 `{{- include … | nindent N }}`` 사용</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="차트-렌더링-명령" class="level2">
+<h2 class="anchored" data-anchor-id="차트-렌더링-명령">차트 렌더링 명령</h2>
+<ul>
+<li><code>helm template 차트명 차트디렉토리</code> 명령으로 생성되는 리소스 매니페스트를 미리 볼 수 있음</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> template helm1 .</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Source: helm1/templates/serviceaccount.yaml</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">apiVersion:</span> v1</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">kind:</span> ServiceAccount</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">metadata:</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name:</span> helm1</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">labels:</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">helm.sh/chart:</span> helm1-0.1.0</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/name:</span> helm1</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/instance:</span> helm1</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/version:</span> <span class="st">"1.16.0"</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/managed-by:</span> Helm</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ex">automountServiceAccountToken:</span> true</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Source: helm1/templates/service.yaml</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="ex">apiVersion:</span> v1</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="ex">kind:</span> Service</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="ex">metadata:</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name:</span> helm1</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="ex">labels:</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="ex">helm.sh/chart:</span> helm1-0.1.0</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/name:</span> helm1</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/instance:</span> helm1</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/version:</span> <span class="st">"1.16.0"</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/managed-by:</span> Helm</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="ex">spec:</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="ex">type:</span> ClusterIP</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ports:</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> port: 80</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>      <span class="ex">targetPort:</span> http</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>      <span class="ex">protocol:</span> TCP</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>      <span class="ex">name:</span> http</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  <span class="ex">selector:</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/name:</span> helm1</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/instance:</span> helm1</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Source: helm1/templates/deployment.yaml</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="ex">apiVersion:</span> apps/v1</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="ex">kind:</span> Deployment</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="ex">metadata:</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name:</span> helm1</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  <span class="ex">labels:</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="ex">helm.sh/chart:</span> helm1-0.1.0</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/name:</span> helm1</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/instance:</span> helm1</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/version:</span> <span class="st">"1.16.0"</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/managed-by:</span> Helm</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="ex">spec:</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  <span class="ex">replicas:</span> 1</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>  <span class="ex">selector:</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    <span class="ex">matchLabels:</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>      <span class="ex">app.kubernetes.io/name:</span> helm1</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>      <span class="ex">app.kubernetes.io/instance:</span> helm1</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>  <span class="ex">template:</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    <span class="ex">metadata:</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>      <span class="ex">labels:</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>        <span class="ex">helm.sh/chart:</span> helm1-0.1.0</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>        <span class="ex">app.kubernetes.io/name:</span> helm1</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>        <span class="ex">app.kubernetes.io/instance:</span> helm1</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>        <span class="ex">app.kubernetes.io/version:</span> <span class="st">"1.16.0"</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>        <span class="ex">app.kubernetes.io/managed-by:</span> Helm</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    <span class="ex">spec:</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>      <span class="ex">serviceAccountName:</span> helm1</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>      <span class="ex">containers:</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> name: helm1</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>          <span class="ex">image:</span> <span class="st">"nginx:1.16.0"</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>          <span class="ex">imagePullPolicy:</span> IfNotPresent</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>          <span class="ex">ports:</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>            <span class="ex">-</span> name: http</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>              <span class="ex">containerPort:</span> 80</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>              <span class="ex">protocol:</span> TCP</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>          <span class="ex">livenessProbe:</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>            <span class="ex">httpGet:</span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>              <span class="ex">path:</span> /</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>              <span class="ex">port:</span> http</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>          <span class="ex">readinessProbe:</span></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>            <span class="ex">httpGet:</span></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>              <span class="ex">path:</span> /</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>              <span class="ex">port:</span> http</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Source: helm1/templates/tests/test-connection.yaml</span></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="ex">apiVersion:</span> v1</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a><span class="ex">kind:</span> Pod</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a><span class="ex">metadata:</span></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name:</span> <span class="st">"helm1-test-connection"</span></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>  <span class="ex">labels:</span></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>    <span class="ex">helm.sh/chart:</span> helm1-0.1.0</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/name:</span> helm1</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/instance:</span> helm1</span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/version:</span> <span class="st">"1.16.0"</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>    <span class="ex">app.kubernetes.io/managed-by:</span> Helm</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>  <span class="ex">annotations:</span></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>    <span class="st">"helm.sh/hook"</span><span class="ex">:</span> test</span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a><span class="ex">spec:</span></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>  <span class="ex">containers:</span></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: wget</span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>      <span class="ex">image:</span> busybox</span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>      <span class="ex">command:</span> <span class="pp">[</span><span class="st">'wget'</span><span class="pp">]</span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>      <span class="ex">args:</span> <span class="pp">[</span><span class="st">'helm1:80'</span><span class="pp">]</span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>  <span class="ex">restartPolicy:</span> Never</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="앱-설치-명령" class="level2">
+<h2 class="anchored" data-anchor-id="앱-설치-명령">앱 설치 명령</h2>
+<ul>
+<li>helm 차트로 만들어진 앱을 쿠버네티스에 설치하려면 <code>helm install</code> 명령을 사용한다.</li>
+<li><code>helm install 릴리스_이름 챠트_디렉토리</code></li>
+<li>릴리스 이름은 차트 이름과 달라도 된다.</li>
+<li>차트 이름은 <code>app.kubernetes.io/name</code> 라벨에</li>
+<li>릴리스 이름은 <code>app.kubernetes.io/instance</code> 라벨에</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">helm1</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> helm install helm1a helm1</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME:</span> helm1a</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">LAST</span> DEPLOYED: Mon Jun  1 14:58:14 2026</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">NAMESPACE:</span> default</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ex">STATUS:</span> deployed</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ex">REVISION:</span> 1</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ex">DESCRIPTION:</span> Install complete</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ex">NOTES:</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Get the application URL by running these commands:</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="bu">export</span> <span class="va">POD_NAME</span><span class="op">=</span><span class="va">$(</span><span class="ex">kubectl</span> get pods <span class="at">--namespace</span> default <span class="at">-l</span> <span class="st">"app.kubernetes.io/name=helm1,app.kubernetes.io/instance=helm1a"</span> <span class="at">-o</span> jsonpath=<span class="st">"{.items[0].metadata.name}"</span><span class="va">)</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="bu">export</span> <span class="va">CONTAINER_PORT</span><span class="op">=</span><span class="va">$(</span><span class="ex">kubectl</span> get pod <span class="at">--namespace</span> default <span class="va">$POD_NAME</span> <span class="at">-o</span> jsonpath=<span class="st">"{.spec.containers[0].ports[0].containerPort}"</span><span class="va">)</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Visit http://127.0.0.1:8080 to use your application"</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="ex">kubectl</span> <span class="at">--namespace</span> default port-forward <span class="va">$POD_NAME</span> 8080:<span class="va">$CONTAINER_PORT</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kubectl get sa,svc,deploy,pod  <span class="at">-l</span> app.kubernetes.io/name=helm1</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                    SECRETS   AGE</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="ex">serviceaccount/helm1a</span>   0         14m</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT<span class="er">(</span><span class="ex">S</span><span class="kw">)</span>   <span class="ex">AGE</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="ex">service/helm1a</span>   ClusterIP   10.43.85.177   <span class="op">&lt;</span>none<span class="op">&gt;</span>        80/TCP    14m</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                     READY   UP-TO-DATE   AVAILABLE   AGE</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="ex">deployment.apps/helm1a</span>   1/1     1            1           14m</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                          READY   STATUS    RESTARTS   AGE</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="ex">pod/helm1a-6777c58455-mgcc8</span>   1/1     Running   0          14m</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ubectl get sa,svc,deploy,pod  <span class="at">-l</span> app.kubernetes.io/instance=helm1a</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                    SECRETS   AGE</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="ex">serviceaccount/helm1a</span>   0         144m</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT<span class="er">(</span><span class="ex">S</span><span class="kw">)</span>   <span class="ex">AGE</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="ex">service/helm1a</span>   ClusterIP   10.43.85.177   <span class="op">&lt;</span>none<span class="op">&gt;</span>        80/TCP    144m</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                     READY   UP-TO-DATE   AVAILABLE   AGE</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="ex">deployment.apps/helm1a</span>   1/1     1            1           144m</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                          READY   STATUS    RESTARTS   AGE</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="ex">pod/helm1a-6777c58455-mgcc8</span>   1/1     Running   0          144m</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="앱-삭제-명령" class="level2">
+<h2 class="anchored" data-anchor-id="앱-삭제-명령">앱 삭제 명령</h2>
+<ul>
+<li>helm 차트로 만들어지고 쿠버네티스에 설치된 앱을 쿠버네티스에서 삭제하려면 <code>helm uninstall</code> 명령을 사용한다.</li>
+<li><code>helm install 앱_릴리스_이름</code></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/k8sbook\.madebykim\.kr\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
