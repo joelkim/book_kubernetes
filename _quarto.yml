@@ -42,7 +42,7 @@ website:
           - "kubectl.ipynb"
       - section: "helm"
         contents:
-          - "helm.ipynb"
-          - "helmrepo.ipynb"
-          - "helmdependency.ipynb"
-          - "helmchartcreate.ipynb"
+          - "helm/helm.ipynb"
+          - "helm/helm_basic.ipynb"
+          - "helm/helmrepo.ipynb"
+          - "helm/helmdependency.ipynb"
