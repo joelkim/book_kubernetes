@@ -25,7 +25,7 @@ reference-location: margin
 
 website:
   title: "Kubenetes Book"
-  site-url: https://kubebook.madebykim.kr/
+  site-url: https://k8sbook.madebykim.kr/
   sidebar:
     style: "docked"
     search: true
