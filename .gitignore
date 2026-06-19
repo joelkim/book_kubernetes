@@ -190,3 +190,5 @@ lab/
 test_*/
 
 **/*.quarto_ipynb
+
+.DS_Store
